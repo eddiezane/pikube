@@ -1,0 +1,13 @@
+service:
+  type: LoadBalancer
+  port: 80
+
+persistence:
+  enabled: true
+  accessMode: ReadWriteOnce
+  size: 3Gi
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
