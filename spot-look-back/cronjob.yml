@@ -1,0 +1,52 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: spot-look-back
+  namespace: default
+spec:
+  concurrencyPolicy: Allow
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - args:
+            - --db
+            - $(DB)
+            - --token
+            - $(TOKEN)
+            - --clientID
+            - $(CLIENT_ID)
+            - --clientSecret
+            - $(CLIENT_SECRET)
+            env:
+            - name: DB
+              valueFrom:
+                secretKeyRef:
+                  key: db
+                  name: spot-look-back
+            - name: TOKEN
+              valueFrom:
+                secretKeyRef:
+                  key: token
+                  name: spot-look-back
+            - name: CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  key: clientID
+                  name: spot-look-back
+            - name: CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: clientSecret
+                  name: spot-look-back
+            image: eddiezane/spot-look-back:latest
+            # TODO: Update this for docker hub changes
+            imagePullPolicy: Always
+            name: spot-look-back
+          restartPolicy: OnFailure
+          terminationGracePeriodSeconds: 30
+  schedule: '*/10 * * * *'
+  successfulJobsHistoryLimit: 3
+  suspend: false
