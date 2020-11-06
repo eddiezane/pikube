@@ -41,9 +41,8 @@ spec:
                 secretKeyRef:
                   key: clientSecret
                   name: spot-look-back
-            image: eddiezane/spot-look-back:latest
-            # TODO: Update this for docker hub changes
-            imagePullPolicy: Always
+            image: eddiezane/spot-look-back:v1.0.0
+            imagePullPolicy: IfNotPresent
             name: spot-look-back
           restartPolicy: OnFailure
           terminationGracePeriodSeconds: 30

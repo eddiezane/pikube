@@ -24,12 +24,11 @@ spec:
                 secretKeyRef:
                   key: token
                   name: dodyndns
-            image: eddiezane/dodyndns:latest
-            # TODO: Update this for docker hub changes
-            imagePullPolicy: Always
+            image: eddiezane/dodyndns:v1.0.0
+            imagePullPolicy: IfNotPresent
             name: dodyndns
           restartPolicy: OnFailure
           terminationGracePeriodSeconds: 30
-  schedule: 0 * * * *
+  schedule: "*/10 * * * *"
   successfulJobsHistoryLimit: 3
   suspend: false
