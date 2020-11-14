@@ -25,3 +25,26 @@ persistentVolumeClaim:
   accessModes:
     - ReadWriteOnce
   size: "500Mi"
+
+# default upstream DNS servers to use
+DNS1: "8.8.8.8"
+DNS2: "8.8.4.4"
+
+virtualHost: pihole.home
+
+dnsmasq:
+  upstreamServers: []
+  # Here you can add upstream dns servers with. All lines will be added to the
+  # pihole dnsmasq configuration.
+  # The format should be like:
+  # - server=/foo.bar/192.168.178.10
+  # - server=/bar.foo/192.168.178.11
+
+  customDnsEntries: []
+    # - address=/hass.local/192.168.78.13
+  # Here you can add custom dns entries to override the
+  # dns resolution with. All lines will be added to the
+  # pihole dnsmasq configuration.
+  # The format should be like:
+  # - address=/foo.bar/192.168.178.10
+  # - address=/bar.foo/192.168.178.11
