@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chrome
+  labels:
+    app: chrome
+spec:
+  selector:
+    matchLabels:
+      app: chrome
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: chrome
+    spec:
+      containers:
+        - name: chrome
+          image: ich777/chrome:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              name: web
+          env:
+            - name: CUSTOM_RES_W
+              value: "1280"
+            - name: CUSTOM_RES_H
+              value: "720"
+          volumeMounts:
+            - mountPath: /dev/shm
+              name: dshm
+            - mountPath: /chrome
+              name: data
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: "1000m"
+            limits:
+              memory: "3Gi"
+              cpu: "3000m"
+      volumes:
+        - name: dshm
+          emptyDir:
+              medium: Memory
+        - name: data
+          persistentVolumeClaim:
+              claimName: chrome
