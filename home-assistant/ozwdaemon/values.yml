@@ -1,0 +1,95 @@
+# Default values for ozwdaemon.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: openzwave/ozwdaemon
+  tag: allinone-arm64-180
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+strategy:
+  type: Recreate
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name:
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext:
+  privileged: true
+  # privileged: true
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+config: {}
+
+resources:
+  requests:
+    cpu: "250m"
+    memory: "250Mi"
+  limits:
+    cpu: "1500m"
+    memory: "1500Mi"
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #  cpu: 100m
+  #  memory: 128Mi
+  # requests:
+  #  cpu: 100m
+  #  memory: 128Mi
+
+nodeSelector:
+  device: zwave
+
+tolerations: []
+
+affinity: {}
+
+podAnnotations: {}
+
+deploymentAnnotations: {}
+
+## Persist configuration to a persistent volume
+persistence:
+  # persistence.enabled - Should disk persistence be enabled
+  enabled: true
+  ## If defined, storageClassName: <storageClass>
+  ## If set to "-", storageClassName: "", which disables dynamic provisioning
+  ## If undefined (the default) or set to null, no storageClassName spec is
+  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+  ##   GKE, AWS & OpenStack)
+  ##
+  existingClaim: ""
+  storageClassName: ""
+  accessModes:
+  - ReadWriteOnce
+  size: 1Gi
+  ## Do not delete the pvc upon helm uninstall
+  skipuninstall: false
+
+# device - usb disk path such as /dev/serial/by-id/usb-0658_0200-if00
+device: /dev/ttyACM0
+mqtt:
+  # mqtt.server - server to publish data to
+  server: mosquitto
+  network_key: # network key in hex bytes

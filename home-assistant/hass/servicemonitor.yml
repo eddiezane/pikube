@@ -1,0 +1,22 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app.kubernetes.io/name: home-assistant
+    app.kubernetes.io/instance: hass
+    release: prom
+  name: hass
+  namespace: monitoring
+spec:
+  endpoints:
+  - bearerTokenSecret: 
+      name: hass-service-monitor-token
+      key: token
+    port: http
+    path: /api/prometheus
+  namespaceSelector:
+    matchNames:
+    - home-assistant
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: hass
