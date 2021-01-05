@@ -29,8 +29,6 @@ spec:
           volumeMounts:
             - mountPath: /dev/shm
               name: dshm
-            - mountPath: /chrome
-              name: data
           resources:
             requests:
               memory: "1Gi"
@@ -42,6 +40,3 @@ spec:
         - name: dshm
           emptyDir:
               medium: Memory
-        - name: data
-          persistentVolumeClaim:
-              claimName: chrome
