@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: streetmerchant
+  labels:
+    app: streetmerchant
+spec:
+  selector:
+    matchLabels:
+      app: streetmerchant
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: streetmerchant
+    spec:
+      containers:
+        - name: streetmerchant
+          image: eddiezane/streetmerchant:v3.3.0-head
+          envFrom:
+            - configMapRef:
+                name: streetmerchant
+                optional: false
+            - secretRef:
+                name: streetmerchant
+                optional: false
+          resources:
+            requests:
+              cpu: "2000m"
+              memory: "1Gi"
+            limits:
+              cpu: "3500m"
+              memory: "3Gi"
