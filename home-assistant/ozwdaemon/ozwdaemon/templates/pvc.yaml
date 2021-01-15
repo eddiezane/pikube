@@ -1,0 +1,19 @@
+---
+# Source: ozwdaemon/templates/pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ozwdaemon
+  labels:
+    helm.sh/chart: ozwdaemon-0.1.3
+    app.kubernetes.io/name: ozwdaemon
+    app.kubernetes.io/instance: ozwdaemon
+    app.kubernetes.io/version: "amd64-173"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "1Gi"
+  storageClassName:
