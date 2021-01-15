@@ -20,13 +20,11 @@ spec:
         app.kubernetes.io/name: home-assistant
         app.kubernetes.io/instance: hass
     spec:
-      nodeSelector:
-        device: zwave
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: hass
-          image: "homeassistant/home-assistant:2021.1.1"
+          image: "homeassistant/home-assistant:2021.1.2"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
@@ -51,12 +49,6 @@ spec:
           volumeMounts:
           - mountPath: /config
             name: config
-          # - mountPath: /dev/ttyACM0
-            # name: zwave
-          # securityContext:
-            # runAsUser: 0
-            # privileged: true
-            # allowPrivilegeEscalation: true
           resources:
             requests:
               cpu: "1000m"
@@ -68,6 +60,3 @@ spec:
       - name: config
         persistentVolumeClaim:
           claimName: hass-config
-      # - name: zwave
-        # hostPath:
-            # path: /dev/ttyACM0

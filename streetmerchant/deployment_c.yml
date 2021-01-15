@@ -22,6 +22,7 @@ spec:
       containers:
         - name: streetmerchant
           image: eddiezane/streetmerchant:v3.3.0-head
+          imagePullPolicy: Always
           envFrom:
             - configMapRef:
                 name: streetmerchant

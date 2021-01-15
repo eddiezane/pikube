@@ -1,0 +1,155 @@
+---
+# Source: zigbee2mqtt/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: zigbee2mqtt-settings
+  labels:
+    helm.sh/chart: zigbee2mqtt-5.0.0
+    app.kubernetes.io/name: zigbee2mqtt
+    app.kubernetes.io/instance: zigbee2mqtt
+    app.kubernetes.io/version: "1.17.0"
+    app.kubernetes.io/managed-by: Helm
+data:
+  configuration.yaml: |
+    advanced:
+      baudrate: 38400
+      homeassistant_discovery_topic: homeassistant
+      homeassistant_status_topic: homeassistant/status
+      last_seen: ISO_8601
+      log_level: info
+      log_output:
+      - console
+      network_key: GENERATE
+    experimental:
+      new_api: true
+    frontend:
+      port: 8080
+    homeassistant: true
+    mqtt:
+      base_topic: zigbee2mqtt
+      include_device_information: true
+      server: mqtt://mosquitto
+    permit_join: true
+    serial:
+      adapter: deconz
+      port: /dev/serial/by-id/usb-dresden_elektronik_ingenieurtechnik_GmbH_ConBee_II_DE2257729-if00
+---
+# Source: zigbee2mqtt/templates/common.yaml
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: zigbee2mqtt-data
+  annotations:
+    "helm.sh/resource-policy": keep
+  labels:
+    helm.sh/chart: zigbee2mqtt-5.0.0
+    app.kubernetes.io/name: zigbee2mqtt
+    app.kubernetes.io/instance: zigbee2mqtt
+    app.kubernetes.io/version: "1.17.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "1Gi"
+---
+# Source: zigbee2mqtt/templates/common.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: zigbee2mqtt
+  labels:
+    helm.sh/chart: zigbee2mqtt-5.0.0
+    app.kubernetes.io/name: zigbee2mqtt
+    app.kubernetes.io/instance: zigbee2mqtt
+    app.kubernetes.io/version: "1.17.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: zigbee2mqtt
+    app.kubernetes.io/instance: zigbee2mqtt
+---
+# Source: zigbee2mqtt/templates/common.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zigbee2mqtt
+  labels:
+    helm.sh/chart: zigbee2mqtt-5.0.0
+    app.kubernetes.io/name: zigbee2mqtt
+    app.kubernetes.io/instance: zigbee2mqtt
+    app.kubernetes.io/version: "1.17.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: zigbee2mqtt
+      app.kubernetes.io/instance: zigbee2mqtt
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: zigbee2mqtt
+        app.kubernetes.io/instance: zigbee2mqtt
+    spec:
+      nodeSelector:
+        device: zigbee
+      serviceAccountName: default
+      dnsPolicy: ClusterFirst
+      enableServiceLinks: true
+      containers:
+      - name: zigbee2mqtt
+        image: "koenkk/zigbee2mqtt:1.17.0"
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: ZIGBEE2MQTT_DATA
+          value: "/data"
+        ports:
+        - name: http
+          containerPort: 8080
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /data
+          name: data
+        - mountPath: /dev/serial/by-id/usb-dresden_elektronik_ingenieurtechnik_GmbH_ConBee_II_DE2257729-if00
+          name: usb
+        - mountPath: /app/configuration.yaml
+          name: zigbee2mqtt-settings
+          subPath: configuration.yaml
+        
+        livenessProbe:
+          tcpSocket:
+            port: http
+          initialDelaySeconds: 30
+          failureThreshold: 5
+          timeoutSeconds: 10
+          periodSeconds: 10
+        readinessProbe:
+          tcpSocket:
+            port: http
+          initialDelaySeconds: 30
+          failureThreshold: 5
+          timeoutSeconds: 10
+          periodSeconds: 10
+        securityContext:
+          privileged: true
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: zigbee2mqtt-data
+      - hostPath:
+          path: /dev/serial/by-id/usb-dresden_elektronik_ingenieurtechnik_GmbH_ConBee_II_DE2257729-if00
+        name: usb
+      - configMap:
+          name: zigbee2mqtt-settings
+        name: zigbee2mqtt-settings
