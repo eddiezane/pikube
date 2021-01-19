@@ -5,9 +5,9 @@ metadata:
   labels:
     app: chrome
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
-    - port: 80
+    - port: 8080
       targetPort: 8080
       name: web
       protocol: TCP

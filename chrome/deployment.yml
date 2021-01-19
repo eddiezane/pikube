@@ -23,9 +23,9 @@ spec:
               name: web
           env:
             - name: CUSTOM_RES_W
-              value: "1280"
+              value: "1920"
             - name: CUSTOM_RES_H
-              value: "720"
+              value: "1080"
           volumeMounts:
             - mountPath: /dev/shm
               name: dshm
