@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: zwave
+  namespace: home-assistant
+spec:
+  rules:
+  - host: zwave.home
+    http:
+      paths:
+      - path: /
+        backend:
+          service:
+            name: zwavejs2mqtt
+            port:
+              name: http
+        pathType: Prefix
