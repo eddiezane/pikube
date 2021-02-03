@@ -30,7 +30,8 @@ persistentVolumeClaim:
   enabled: true
   accessModes:
     - ReadWriteOnce
-  size: "500Mi"
+  size: "5Gi"
+  storageClass: longhorn
 
 # default upstream DNS servers to use
 DNS1: "8.8.8.8"
@@ -46,11 +47,27 @@ dnsmasq:
   # - server=/foo.bar/192.168.178.10
   # - server=/bar.foo/192.168.178.11
 
-  customDnsEntries: []
-    # - address=/hass.local/192.168.78.13
+  customDnsEntries:
+    - address=/.home/192.168.78.14
+
   # Here you can add custom dns entries to override the
   # dns resolution with. All lines will be added to the
   # pihole dnsmasq configuration.
   # The format should be like:
   # - address=/foo.bar/192.168.178.10
   # - address=/bar.foo/192.168.178.11
+
+ingress:
+  enabled: true
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  path: /
+  hosts:
+    # virtualHost (default value is pi.hole) will be appended to the hosts
+    - pihole.home
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #     #- virtualHost (default value is pi.hole) will be appended to the hosts
+  #      - chart-example.local

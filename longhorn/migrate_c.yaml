@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox
+  namespace: home-assistant
+spec:
+  containers:
+  - image: busybox
+    command:
+      - sleep
+      - "360000"
+    imagePullPolicy: IfNotPresent
+    name: busybox
+    volumeMounts:
+      - mountPath: /data
+        name: data
+  restartPolicy: Always
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+          claimName: ozwdaemon
