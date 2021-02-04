@@ -10,6 +10,9 @@ spec:
   replicas: 1
   strategy:
     type: Recreate
+    # rollingUpdate:
+      # maxSurge: 1
+      # maxUnavailable: 0
   selector:
     matchLabels:
       app.kubernetes.io/name: home-assistant
@@ -24,7 +27,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: hass
-          image: "homeassistant/home-assistant:2021.1.4"
+          image: "homeassistant/home-assistant:2021.2.0"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http

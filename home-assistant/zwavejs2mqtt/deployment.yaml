@@ -24,22 +24,25 @@ spec:
         device: zwave
       containers:
         - name: zwavejs2mqtt
-          image: zwavejs/zwavejs2mqtt:1.0.3
+          image: zwavejs/zwavejs2mqtt:1.0.4
           livenessProbe:
-            failureThreshold: 12
+            failureThreshold: 3
             httpGet:
               httpHeaders:
                 - name: Accept
                   value: text/plain
-              path: /health
+              path: /health/zwave
               port: http
             initialDelaySeconds: 30
-            periodSeconds: 10
+            periodSeconds: 60
             successThreshold: 1
             timeoutSeconds: 2
           ports:
             - containerPort: 8091
               name: http
+              protocol: TCP
+            - containerPort: 3000
+              name: websocket
               protocol: TCP
           resources:
             requests:
@@ -62,7 +65,3 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: zwavejs2mqtt
-        # - name: config <-- if putting your settings.json in a secret
-        #   secret:
-        #     defaultMode: 420
-        #     secretName: zwavejs2mqtt
