@@ -50,8 +50,11 @@ spec:
             failureThreshold: 5
             timeoutSeconds: 10
           volumeMounts:
-          - mountPath: /config
-            name: config
+          - name: config
+            mountPath: /config
+          - name: hass-configuration
+            mountPath: /config/configuration.yaml
+            subPath: configuration.yaml
           resources:
             requests:
               cpu: "1000m"
@@ -63,3 +66,9 @@ spec:
       - name: config
         persistentVolumeClaim:
           claimName: hass-config
+      - name: hass-configuration
+        configMap:
+          name: hass-configuration
+          items:
+            - key: configuration.yaml
+              path: configuration.yaml
