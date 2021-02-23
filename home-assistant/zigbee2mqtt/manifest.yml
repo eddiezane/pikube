@@ -5,10 +5,10 @@ kind: ConfigMap
 metadata:
   name: zigbee2mqtt-settings
   labels:
-    helm.sh/chart: zigbee2mqtt-5.0.0
+    helm.sh/chart: zigbee2mqtt-6.0.1
     app.kubernetes.io/name: zigbee2mqtt
     app.kubernetes.io/instance: zigbee2mqtt
-    app.kubernetes.io/version: "1.17.0"
+    app.kubernetes.io/version: "1.17.1"
     app.kubernetes.io/managed-by: Helm
 data:
   configuration.yaml: |
@@ -43,10 +43,10 @@ metadata:
   annotations:
     "helm.sh/resource-policy": keep
   labels:
-    helm.sh/chart: zigbee2mqtt-5.0.0
+    helm.sh/chart: zigbee2mqtt-6.0.1
     app.kubernetes.io/name: zigbee2mqtt
     app.kubernetes.io/instance: zigbee2mqtt
-    app.kubernetes.io/version: "1.17.0"
+    app.kubernetes.io/version: "1.17.1"
     app.kubernetes.io/managed-by: Helm
 spec:
   accessModes:
@@ -54,7 +54,7 @@ spec:
   resources:
     requests:
       storage: "1Gi"
-  storageClassName: longhorn
+  storageClassName: "longhorn"
 ---
 # Source: zigbee2mqtt/templates/common.yaml
 apiVersion: v1
@@ -62,10 +62,10 @@ kind: Service
 metadata:
   name: zigbee2mqtt
   labels:
-    helm.sh/chart: zigbee2mqtt-5.0.0
+    helm.sh/chart: zigbee2mqtt-6.0.1
     app.kubernetes.io/name: zigbee2mqtt
     app.kubernetes.io/instance: zigbee2mqtt
-    app.kubernetes.io/version: "1.17.0"
+    app.kubernetes.io/version: "1.17.1"
     app.kubernetes.io/managed-by: Helm
 spec:
   type: ClusterIP
@@ -84,10 +84,10 @@ kind: Deployment
 metadata:
   name: zigbee2mqtt
   labels:
-    helm.sh/chart: zigbee2mqtt-5.0.0
+    helm.sh/chart: zigbee2mqtt-6.0.1
     app.kubernetes.io/name: zigbee2mqtt
     app.kubernetes.io/instance: zigbee2mqtt
-    app.kubernetes.io/version: "1.17.0"
+    app.kubernetes.io/version: "1.17.1"
     app.kubernetes.io/managed-by: Helm
 spec:
   replicas: 1
@@ -110,8 +110,10 @@ spec:
       enableServiceLinks: true
       containers:
       - name: zigbee2mqtt
-        image: "koenkk/zigbee2mqtt:1.17.0"
+        image: "koenkk/zigbee2mqtt:1.17.1"
         imagePullPolicy: IfNotPresent
+        securityContext:
+          privileged: true
         env:
         - name: ZIGBEE2MQTT_DATA
           value: "/data"
@@ -131,19 +133,24 @@ spec:
         livenessProbe:
           tcpSocket:
             port: http
-          initialDelaySeconds: 30
-          failureThreshold: 5
-          timeoutSeconds: 10
+          initialDelaySeconds: 0
+          failureThreshold: 3
+          timeoutSeconds: 1
           periodSeconds: 10
         readinessProbe:
           tcpSocket:
             port: http
-          initialDelaySeconds: 30
-          failureThreshold: 5
-          timeoutSeconds: 10
+          initialDelaySeconds: 0
+          failureThreshold: 3
+          timeoutSeconds: 1
           periodSeconds: 10
-        securityContext:
-          privileged: true
+        startupProbe:
+          tcpSocket:
+            port: http
+          initialDelaySeconds: 0
+          failureThreshold: 30
+          timeoutSeconds: 1
+          periodSeconds: 5
       volumes:
       - name: data
         persistentVolumeClaim:
