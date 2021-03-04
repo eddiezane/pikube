@@ -5,7 +5,7 @@
 image:
   repository: koenkk/zigbee2mqtt
   pullPolicy: IfNotPresent
-  tag: 1.17.1
+  tag: 1.18.1
 
 strategy:
   type: Recreate
@@ -50,15 +50,15 @@ additionalVolumes:
     hostPath:
       path: /dev/serial/by-id/usb-dresden_elektronik_ingenieurtechnik_GmbH_ConBee_II_DE2257729-if00
 
-# affinity:
-#   nodeAffinity:
-#     requiredDuringSchedulingIgnoredDuringExecution:
-#       nodeSelectorTerms:
-#       - matchExpressions:
-#         - key: app
-#           operator: In
-#           values:
-#           - zigbee-controller
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: device
+          operator: In
+          values:
+          - zigbee
 
 # zigbee2mqtt configuration settings
 # https://www.zigbee2mqtt.io/information/configuration.html

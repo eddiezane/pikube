@@ -1,5 +1,5 @@
 image:
-  tag: v5.6
+  tag: v5.7
 
 maxSurge: 2
 maxUnavailable: 0
@@ -48,6 +48,7 @@ dnsmasq:
   # - server=/bar.foo/192.168.178.11
 
   customDnsEntries:
+    - address=/hammy.home/192.168.78.50
     - address=/.home/192.168.78.14
 
   # Here you can add custom dns entries to override the

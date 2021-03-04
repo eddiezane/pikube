@@ -5,7 +5,7 @@ kind: ConfigMap
 metadata:
   name: zigbee2mqtt-settings
   labels:
-    helm.sh/chart: zigbee2mqtt-6.0.1
+    helm.sh/chart: zigbee2mqtt-6.1.0
     app.kubernetes.io/name: zigbee2mqtt
     app.kubernetes.io/instance: zigbee2mqtt
     app.kubernetes.io/version: "1.17.1"
@@ -43,7 +43,7 @@ metadata:
   annotations:
     "helm.sh/resource-policy": keep
   labels:
-    helm.sh/chart: zigbee2mqtt-6.0.1
+    helm.sh/chart: zigbee2mqtt-6.1.0
     app.kubernetes.io/name: zigbee2mqtt
     app.kubernetes.io/instance: zigbee2mqtt
     app.kubernetes.io/version: "1.17.1"
@@ -62,7 +62,7 @@ kind: Service
 metadata:
   name: zigbee2mqtt
   labels:
-    helm.sh/chart: zigbee2mqtt-6.0.1
+    helm.sh/chart: zigbee2mqtt-6.1.0
     app.kubernetes.io/name: zigbee2mqtt
     app.kubernetes.io/instance: zigbee2mqtt
     app.kubernetes.io/version: "1.17.1"
@@ -84,7 +84,7 @@ kind: Deployment
 metadata:
   name: zigbee2mqtt
   labels:
-    helm.sh/chart: zigbee2mqtt-6.0.1
+    helm.sh/chart: zigbee2mqtt-6.1.0
     app.kubernetes.io/name: zigbee2mqtt
     app.kubernetes.io/instance: zigbee2mqtt
     app.kubernetes.io/version: "1.17.1"
@@ -103,14 +103,13 @@ spec:
         app.kubernetes.io/name: zigbee2mqtt
         app.kubernetes.io/instance: zigbee2mqtt
     spec:
-      nodeSelector:
-        device: zigbee
+      
       serviceAccountName: default
       dnsPolicy: ClusterFirst
       enableServiceLinks: true
       containers:
       - name: zigbee2mqtt
-        image: "koenkk/zigbee2mqtt:1.17.1"
+        image: "koenkk/zigbee2mqtt:1.18.1"
         imagePullPolicy: IfNotPresent
         securityContext:
           privileged: true
@@ -161,3 +160,12 @@ spec:
       - configMap:
           name: zigbee2mqtt-settings
         name: zigbee2mqtt-settings
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: device
+                operator: In
+                values:
+                - zigbee
