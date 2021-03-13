@@ -25,6 +25,11 @@ data:
           - light.office_back_right_light
           - light.office_front_left_light
           - light.office_front_right_light
+      - platform: group
+        name: Key Lights
+        entities:
+          - light.key_light_left
+          - light.key_light_right
 
     prometheus:
 
@@ -33,3 +38,5 @@ data:
       client_secret: !secret nest_client_secret
       project_id: !secret nest_project_id
       subscriber_id: !secret nest_subscriber_id
+
+    logbook:
