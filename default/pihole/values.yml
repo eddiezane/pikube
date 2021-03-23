@@ -23,8 +23,8 @@ resources:
     cpu: "50m"
     memory: "100Mi"
   limits:
-    cpu: "200m"
-    memory: "300Mi"
+    cpu: "1000m"
+    memory: "500Mi"
 
 persistentVolumeClaim:
   enabled: true
