@@ -24,7 +24,7 @@ spec:
         device: zwave
       containers:
         - name: zwavejs2mqtt
-          image: zwavejs/zwavejs2mqtt:2.4.0
+          image: zwavejs/zwavejs2mqtt:2.4.1
           livenessProbe:
             failureThreshold: 3
             httpGet:
@@ -46,11 +46,11 @@ spec:
               protocol: TCP
           resources:
             requests:
-              cpu: 250m
-              memory: 250Mi
+              cpu: 50m
+              memory: 100Mi
             limits:
-              cpu: 1500m
-              memory: 750Mi
+              cpu: 200m
+              memory: 250Mi
           securityContext:
             privileged: true
           volumeMounts:

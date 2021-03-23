@@ -1,0 +1,29 @@
+image:
+  repository: raspbernetes/kured
+  tag: 1.6.1
+
+configuration:
+  endTime: "5:00"              # only reboot before this time of day (default "23:59")
+  rebootDays: [mo,tu,we,th,fr] # only reboot on these days (default [su,mo,tu,we,th,fr,sa])
+  startTime: "3:00"            # only reboot after this time of day (default "0:00")
+  timeZone: "America/Denver"   # time-zone to use (valid zones from "time" golang package)
+  annotateNodes: false         # enable 'weave.works/kured-reboot-in-progress' and 'weave.works/kured-most-recent-reboot-needed' node annotations to signify kured reboot operations
+
+resources: 
+  requests:
+    cpu: 10m
+    memory: 20Mi
+  limits:
+    cpu: 50m
+    memory: 100Mi
+
+metrics:
+  create: true
+  namespace: "monitoring"
+  labels:
+    release: kube-prometheus-stack
+  interval: 60s
+
+service:
+  create: true
+  port: 8080
