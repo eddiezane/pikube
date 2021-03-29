@@ -1,8 +1,10 @@
 image:
   tag: v5.7
 
-maxSurge: 2
-maxUnavailable: 0
+maxSurge: 6
+maxUnavailable: 1
+
+replicaCount: 3
 
 serviceWeb:
   type: LoadBalancer
@@ -27,7 +29,7 @@ resources:
     memory: "500Mi"
 
 persistentVolumeClaim:
-  enabled: true
+  enabled: false
   accessModes:
     - ReadWriteOnce
   size: "5Gi"
@@ -72,3 +74,12 @@ ingress:
   #    hosts:
   #     #- virtualHost (default value is pi.hole) will be appended to the hosts
   #      - chart-example.local
+
+antiaff:
+  # set to true to enable antiaffinity (example: 2 pihole DNS in the same cluster)
+  enabled: true
+  # Here you can set the pihole release (you set in `helm install <releasename> ...`)
+  # you want to avoid
+  avoidRelease: pihole
+  # Here you can choose between preferred or required
+  strict: true
