@@ -4,7 +4,7 @@ metadata:
   labels:
     app.kubernetes.io/name: home-assistant
     app.kubernetes.io/instance: hass
-    release: prom
+    release: kube-prometheus-stack
   name: hass
   namespace: monitoring
 spec:
@@ -20,3 +20,4 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/instance: hass
+      app.kubernetes.io/name: home-assistant

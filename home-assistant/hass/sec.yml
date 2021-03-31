@@ -3,6 +3,6 @@ data:
   token: # Base64 hass api token
 kind: Secret
 metadata:
-  name: hass-servicemonitor-token
+  name: hass-service-monitor-token
   namespace: monitoring
 type: Opaque
