@@ -24,9 +24,9 @@ serviceWeb:
 serviceDns:
   type: LoadBalancer
   externalTrafficPolicy: Local
-  loadBalancerIP: "192.168.78.15"
+  loadBalancerIP: "192.168.78.16"
   annotations:
-    metallb.universe.tf/allow-shared-ip: pihole-svc
+    metallb.universe.tf/allow-shared-ip: pihole-back-svc
 
 resources:
   requests:
@@ -44,10 +44,10 @@ persistentVolumeClaim:
   storageClass: longhorn
 
 # default upstream DNS servers to use
-DNS1: "8.8.8.8"
-DNS2: "8.8.4.4"
+DNS1: "1.1.1.1"
+DNS2: "1.0.0.1"
 
-virtualHost: pihole.home
+virtualHost: pihole-back.home
 
 dnsmasq:
   upstreamServers: []
@@ -76,7 +76,7 @@ ingress:
   path: /
   hosts:
     # virtualHost (default value is pi.hole) will be appended to the hosts
-    - pihole.home
+    - pihole-back.home
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
@@ -88,6 +88,6 @@ antiaff:
   enabled: true
   # Here you can set the pihole release (you set in `helm install <releasename> ...`)
   # you want to avoid
-  avoidRelease: pihole-back
+  avoidRelease: pihole
   # Here you can choose between preferred or required
   strict: true
