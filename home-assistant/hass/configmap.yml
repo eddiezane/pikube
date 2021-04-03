@@ -41,6 +41,19 @@ data:
 
     logbook:
 
+    binary_sensor:
+      - platform: template
+        sensors:
+          living_room_tv:
+            friendly_name: Living Room TV
+            value_template: "{{ not is_state('media_player.living_room_tv', 'off') }}"
+          master_bedroom_tv:
+            friendly_name: Master Bedroom TV
+            value_template: "{{ not is_state('media_player.master_bedroom_tv', 'off') }}"
+          guest_bedroom_tv:
+            friendly_name: Guest Bedroom TV
+            value_template: "{{ not is_state('media_player.guest_bedroom_tv', 'off') }}"
+
     sensor:
       - platform: template
         sensors:
