@@ -605,11 +605,21 @@ grafana:
   enabled: true
   namespaceOverride: ""
 
+  plugins:
+  - natel-discrete-panel
+
   ## Deploy default dashboards.
   ##
   defaultDashboardsEnabled: true
 
   adminPassword: prom-operator
+
+  persistence:
+    enabled: true
+    type: pvc
+    size: 10Gi
+    storageClassName: longhorn
+    accessModes: ["ReadWriteOnce"]
 
   ingress:
     ## If true, Grafana Ingress will be created

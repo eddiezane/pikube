@@ -40,3 +40,12 @@ data:
       subscriber_id: !secret nest_subscriber_id
 
     logbook:
+
+    sensor:
+      - platform: template
+        sensors:
+          outside_temperature:
+            friendly_name: Outside Temperature
+            unit_of_measurement: °F
+            value_template: "{{ state_attr('weather.climacell_nowcast', 'temperature') }}"
+            device_class: temperature
