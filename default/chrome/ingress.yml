@@ -2,6 +2,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: chrome
+  annotations:
+    traefik.ingress.kubernetes.io/rewrite-target: /vnc.html
 spec:
   rules:
   - host: chrome.home
