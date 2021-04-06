@@ -1,0 +1,14 @@
+resources:
+  requests:
+    cpu: 50m
+    memory: 15Mi
+  limits:
+    cpu: 150m
+    memory: 100Mi
+
+serviceMonitor:
+  enabled: true
+  interval: "60m"
+  scrapeTimeout: 90s
+  additionalLabels:
+    release: kube-prometheus-stack
