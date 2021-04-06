@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pivpn
+  namespace: pivpn
+  labels:
+    app.kubernetes.io/name: pivpn
+    release: kube-prometheus-stack
+spec:
+  type: ExternalName
+  externalName: 192.168.78.9
+  clusterIP: ""
+  ports:
+    - name: metrics
+      port: 9100
+      protocol: TCP
+      targetPort: 9100
