@@ -27,7 +27,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: hass
-          image: "homeassistant/home-assistant:2021.4.0b6"
+          image: "homeassistant/home-assistant:2021.4.2"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
