@@ -40,3 +40,24 @@ spec:
       - "monitoring"
   endpoints:
   - port: http-metrics
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: loki-stack-promtail-headless
+  namespace: monitoring
+  labels:
+    app: promtail
+    chart: promtail-2.2.0
+    release: loki-stack
+    heritage: Helm
+spec:
+  clusterIP: None
+  ports:
+    - port: 3101
+      protocol: TCP
+      name: http-metrics
+      targetPort: http-metrics
+  selector:
+    app: promtail
+    release: loki-stack
