@@ -21,6 +21,6 @@ echo "backup created at ${path}"
 
 echo "starting backup rotation"
 
-/usr/bin/find $folder -mtime +3 -name "*.db" -print -delete
+/usr/bin/find $folder -mtime 3 -name "*.db" -print -delete
 
 echo "backup rotation done"
