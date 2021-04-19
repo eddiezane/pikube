@@ -1,0 +1,42 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: loki-stack
+  namespace: monitoring
+  labels:
+    app: loki
+    chart: loki-2.3.0
+    heritage: Helm
+    release: kube-prometheus-stack
+spec:
+  selector:
+    matchLabels:
+      app: loki
+      release: "loki-stack"
+      variant: headless
+  namespaceSelector:
+    matchNames:
+      - "monitoring"
+  endpoints:
+  - port: http-metrics
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: loki-stack-promtail
+  namespace: monitoring
+  labels:
+    app: promtail
+    chart: promtail-2.2.0
+    heritage: Helm
+    release: kube-prometheus-stack
+spec:
+  selector:
+    matchLabels:
+      app: promtail
+      release: "loki-stack"
+  namespaceSelector:
+    matchNames:
+      - "monitoring"
+  endpoints:
+  - port: http-metrics

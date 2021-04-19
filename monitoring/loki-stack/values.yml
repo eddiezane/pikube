@@ -1,0 +1,32 @@
+loki:
+  persistence:
+    enabled: true
+    accessModes:
+    - ReadWriteOnce
+    size: 10Gi
+    storageClassName: longhorn
+
+  rbac:
+    pspEnabled: false
+
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+  updateStrategy:
+    type: RollingUpdate
+
+promtail:
+  enabled: true
+
+  resources:
+   limits:
+     cpu: 300m
+     memory: 256Mi
+   requests:
+     cpu: 100m
+     memory: 128Mi
