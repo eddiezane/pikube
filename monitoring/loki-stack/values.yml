@@ -14,8 +14,8 @@ loki:
       cpu: 2000m
       memory: 1Gi
     requests:
-      cpu: 100m
-      memory: 128Mi
+      cpu: 50m
+      memory: 50Mi
 
   updateStrategy:
     type: RollingUpdate
@@ -28,5 +28,5 @@ promtail:
      cpu: 300m
      memory: 256Mi
    requests:
-     cpu: 100m
-     memory: 128Mi
+     cpu: 50m
+     memory: 50Mi
