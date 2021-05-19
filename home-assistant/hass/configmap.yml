@@ -8,6 +8,10 @@ data:
     # Configure a default setup of Home Assistant (frontend, api, etc)
     default_config:
 
+    alarm_control_panel:
+      - platform: manual
+        arming_time: 10
+
     # Text to speech
     tts:
       - platform: google_translate
