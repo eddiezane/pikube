@@ -54,7 +54,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.3",
+      "pluginVersion": "7.5.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -150,7 +150,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.3",
+      "pluginVersion": "7.5.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -246,7 +246,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.3",
+      "pluginVersion": "7.5.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -261,6 +261,14 @@
           "interval": "",
           "legendFormat": "{{friendly_name}}",
           "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum by(friendly_name) (switch_state{friendly_name=~\"Roof Lights|Salt Lamp\"}) * 100",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{friendly_name}}",
+          "refId": "B"
         }
       ],
       "thresholds": [],
@@ -342,7 +350,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.3",
+      "pluginVersion": "7.5.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -728,7 +736,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.3",
+      "pluginVersion": "7.5.5",
       "targets": [
         {
           "exemplar": true,
@@ -760,5 +768,5 @@
   "timezone": "",
   "title": "Home Assistant",
   "uid": "g5zK8e9Mz",
-  "version": 6
+  "version": 2
 }
