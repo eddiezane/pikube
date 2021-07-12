@@ -2,9 +2,11 @@
 # Manual edits may be lost in future updates.
 
 provider "registry.terraform.io/paultyng/unifi" {
-  version = "0.27.0"
+  version     = "0.27.0"
+  constraints = "0.27.0"
   hashes = [
     "h1:0d+2Yj//dtWNmnJLQ9c/zjBbToBC6GVHPgEBnC3VZBs=",
+    "h1:tQ8k4A/NFGroZ4CdGZmSaI0nMfO7BCQiZIc1nAShCyI=",
     "zh:132380f7e82256ac3ff72a16bac9cc0073194bb651ed058be18b08daed091150",
     "zh:214df04b15064947fc058ad065826f6ddc43637d35db902ae6a2a0712b66234d",
     "zh:317065f6ed98a9f98e23d0fcbbf72ad32c74a08506904970cdaa9d0aa4633c27",
