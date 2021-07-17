@@ -21,10 +21,10 @@ spec:
         app.kubernetes.io/instance: zwavejs2mqtt
     spec:
       nodeSelector:
-        device: zwave
+        zwave: "true"
       containers:
         - name: zwavejs2mqtt
-          image: zwavejs/zwavejs2mqtt:5.2.0
+          image: zwavejs/zwavejs2mqtt:5.2.2
           livenessProbe:
             failureThreshold: 3
             httpGet:
@@ -61,7 +61,7 @@ spec:
       volumes:
         - name: zwavestick
           hostPath:
-            path: /dev/ttyACM0
+            path: /dev/serial/by-id/usb-0658_0200-if00
         - name: data
           persistentVolumeClaim:
             claimName: zwavejs2mqtt

@@ -4,7 +4,7 @@ persistence:
     storageClass: longhorn
     accessMode: ReadWriteOnce
     size: 1Gi
-    existingClaim: "data-mosquitto-0"
+    # existingClaim: "data-mosquitto-0"
 
 resources:
   requests:

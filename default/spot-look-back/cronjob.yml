@@ -41,7 +41,7 @@ spec:
                 secretKeyRef:
                   key: clientSecret
                   name: spot-look-back
-            image: eddiezane/spot-look-back:v1.0.0
+            image: eddiezane/spot-look-back:v1.1.0
             imagePullPolicy: IfNotPresent
             name: spot-look-back
           restartPolicy: OnFailure

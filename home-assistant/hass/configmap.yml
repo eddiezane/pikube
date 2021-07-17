@@ -66,3 +66,13 @@ data:
             unit_of_measurement: °F
             value_template: "{{ state_attr('weather.climacell_nowcast', 'temperature') }}"
             device_class: temperature
+
+    http:
+      use_x_forwarded_for: true
+      trusted_proxies:
+        - 10.42.0.0/16
+        - 10.43.0.0/16
+        - 192.168.79.30
+        - 192.168.79.31
+        - 192.168.79.32
+        - 192.168.79.33

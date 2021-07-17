@@ -176,7 +176,7 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              - key: device
+              - key: zigbee
                 operator: In
                 values:
-                - zigbee
+                - "true"

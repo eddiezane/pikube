@@ -1,5 +1,5 @@
 image:
-  tag: v5.8
+  tag: v5.8.1
 
 maxSurge: 2
 maxUnavailable: 1
@@ -24,7 +24,7 @@ serviceWeb:
 serviceDns:
   type: LoadBalancer
   externalTrafficPolicy: Local
-  loadBalancerIP: "192.168.78.16"
+  loadBalancerIP: "192.168.79.52"
   annotations:
     metallb.universe.tf/allow-shared-ip: pihole-back-svc
 
@@ -59,7 +59,7 @@ dnsmasq:
 
   customDnsEntries:
     - address=/hammy.home/192.168.78.50
-    - address=/.home/192.168.78.14
+    - address=/.home/192.168.79.50
 
   # Here you can add custom dns entries to override the
   # dns resolution with. All lines will be added to the
