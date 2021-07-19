@@ -1,37 +1,64 @@
+defaultRules:
+  create: true
+  rules:
+    etcd: false
+    kubeScheduler: false
+
+global:
+  rbac:
+    pspEnabled: false
+
 alertmanager:
-  alertmanagerSpec:
-    resources:
-      requests:
-        cpu: 50m
-        memory: 50Mi 
-      limits:
-        cpu: 1000m
-        memory: 500Mi
+  ingress:
+    enabled: true
+    hosts:
+      - alertmanager.home
+    paths:
+      - /
+    pathType: ImplementationSpecific
+  storage:
+    volumeClaimTemplate:
+      spec:
+        storageClassName: longhorn
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 5Gi
 
 grafana:
-  plugins:
-  - natel-discrete-panel
   adminPassword: prom-operator
+  ingress:
+    enabled: true
+    hosts:
+      - grafana.home
+    path: /
+  plugins:
+    - natel-discrete-panel
   persistence:
     enabled: true
     type: pvc
     size: 10Gi
     storageClassName: longhorn
     accessModes: ["ReadWriteOnce"]
-  ingress:
-    enabled: true
-    hosts:
-      - grafana.home
-    path: /
-    tls: []
+
+  additionalDataSources:
+    - name: PostgreSQL - Spot Look Back
+      type: postgres
+      url: # db url:port
+      database: spot-look-back
+      user: grafana
+      jsonData:
+        sslmode: require
+        postgresVersion: 1000
+        tlsSkipVerify: true
+        tlsConfigurationMethod: file-content
+      secureJsonData:
+        password: # password
+        tlsCACert: |
+          -----BEGIN CERTIFICATE-----
+          -----END CERTIFICATE-----
 
 kubeControllerManager:
-  enabled: false
-
-coreDns:
-  enabled: true
-
-kubeDns:
   enabled: false
 
 kubeEtcd:
@@ -43,11 +70,9 @@ kubeScheduler:
 kubeProxy:
   enabled: false
 
-kubeStateMetrics:
-  enabled: true
-
-nodeExporter:
-  enabled: true
+kube-state-metrics:
+  podSecurityPolicy:
+    enabled: false
 
 prometheus-node-exporter:
   resources:
@@ -59,7 +84,6 @@ prometheus-node-exporter:
       memory: 200Mi
 
 prometheusOperator:
-  enabled: true
   resources:
     requests:
       cpu: 50m
@@ -69,19 +93,19 @@ prometheusOperator:
       memory: 500Mi
 
 prometheus:
-  enabled: true
   ingress:
-    enabled: false
+    enabled: true
     hosts:
       - prometheus.home
     paths:
       - /
+    pathType: ImplementationSpecific
   prometheusSpec:
-    retention: 10d
-    retentionSize: 12GB
     serviceMonitorNamespaceSelector:
       matchLabels:
         prometheus: scrape
+    retention: 10d
+    retentionSize: 12GB
     resources:
       requests:
         cpu: 600m
