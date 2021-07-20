@@ -35,6 +35,19 @@ resource "unifi_port_profile" "Dream_Machine_Pro_SFP2" {
   # tagged_networkconf_ids = [unifi_network.TEHWHALE.id, unifi_network.Looten_Plunder.id]
 }
 
+resource "unifi_port_profile" "Network_Closet_Switch_SFP1" {
+  name = "Network Closet Switch SFP1"
+  native_networkconf_id = unifi_network.LAN.id
+  autoneg = false
+  speed = 1000
+  full_duplex = true
+  poe_mode = "off"
+
+  # This is probably a bug. Forward is a hidden option that adds all vlans
+  forward = "all"
+  # tagged_networkconf_ids = [unifi_network.TEHWHALE.id, unifi_network.Looten_Plunder.id]
+}
+
 resource "unifi_port_profile" "Living_Room_Switch_Passthrough" {
   name = "Living Room Switch Passthrough"
   native_networkconf_id = unifi_network.LAN.id
