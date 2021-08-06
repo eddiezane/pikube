@@ -1,0 +1,23 @@
+. {
+  log
+  errors
+  health
+  ready
+  prometheus
+
+  forward . 8.8.8.8 8.8.4.4 {
+    tls_servername dns.google
+  }
+}
+
+home. {
+  log
+  errors
+  health
+  ready
+  prometheus
+
+  template IN ANY home {
+    answer "* 60 IN A 192.168.79.50"
+  }
+}
