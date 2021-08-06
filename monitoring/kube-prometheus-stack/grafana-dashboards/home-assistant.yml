@@ -24,7 +24,6 @@ data:
       "editable": true,
       "gnetId": null,
       "graphTooltip": 0,
-      "id": 21,
       "links": [],
       "panels": [
         {
@@ -33,10 +32,6 @@ data:
           "dashLength": 10,
           "dashes": false,
           "datasource": null,
-          "fieldConfig": {
-            "defaults": {},
-            "overrides": []
-          },
           "fill": 0,
           "fillGradient": 0,
           "gridPos": {
@@ -63,7 +58,7 @@ data:
             "alertThreshold": true
           },
           "percentage": false,
-          "pluginVersion": "7.5.5",
+          "pluginVersion": "8.0.3",
           "pointradius": 2,
           "points": false,
           "renderer": "flot",
@@ -74,7 +69,7 @@ data:
           "targets": [
             {
               "exemplar": true,
-              "expr": "sum by(friendly_name) (temperature_c{friendly_name!~\"Living Room Thermostat|Upstairs Thermostat|Subaru Crosstrek External Temp\"})",
+              "expr": "(sum by(friendly_name) (homeassistant_sensor_temperature_celsius{friendly_name!~\"Living Room Thermostat|Upstairs Thermostat|Subaru Crosstrek External Temp\"})) * (9/5) + 32",
               "interval": "",
               "legendFormat": "{{friendly_name}}",
               "refId": "A"
@@ -129,10 +124,6 @@ data:
           "dashLength": 10,
           "dashes": false,
           "datasource": null,
-          "fieldConfig": {
-            "defaults": {},
-            "overrides": []
-          },
           "fill": 0,
           "fillGradient": 0,
           "gridPos": {
@@ -159,7 +150,7 @@ data:
             "alertThreshold": true
           },
           "percentage": false,
-          "pluginVersion": "7.5.5",
+          "pluginVersion": "8.0.3",
           "pointradius": 2,
           "points": false,
           "renderer": "flot",
@@ -170,7 +161,7 @@ data:
           "targets": [
             {
               "exemplar": true,
-              "expr": "sum by(friendly_name) (humidity_percent)",
+              "expr": "sum by(friendly_name) (homeassistant_sensor_humidity_percent)",
               "interval": "",
               "legendFormat": "{{friendly_name}}",
               "refId": "A"
@@ -225,10 +216,6 @@ data:
           "dashLength": 10,
           "dashes": false,
           "datasource": null,
-          "fieldConfig": {
-            "defaults": {},
-            "overrides": []
-          },
           "fill": 0,
           "fillGradient": 0,
           "gridPos": {
@@ -255,7 +242,7 @@ data:
             "alertThreshold": true
           },
           "percentage": false,
-          "pluginVersion": "7.5.5",
+          "pluginVersion": "8.0.3",
           "pointradius": 2,
           "points": false,
           "renderer": "flot",
@@ -266,7 +253,7 @@ data:
           "targets": [
             {
               "exemplar": true,
-              "expr": "sum by(friendly_name) (light_state)",
+              "expr": "sum by(friendly_name) (homeassistant_light_brightness_percent)",
               "interval": "",
               "legendFormat": "{{friendly_name}}",
               "refId": "A"
@@ -329,10 +316,6 @@ data:
           "dashLength": 10,
           "dashes": false,
           "datasource": null,
-          "fieldConfig": {
-            "defaults": {},
-            "overrides": []
-          },
           "fill": 0,
           "fillGradient": 0,
           "gridPos": {
@@ -359,7 +342,7 @@ data:
             "alertThreshold": true
           },
           "percentage": false,
-          "pluginVersion": "7.5.5",
+          "pluginVersion": "8.0.3",
           "pointradius": 2,
           "points": false,
           "renderer": "flot",
@@ -370,7 +353,7 @@ data:
           "targets": [
             {
               "exemplar": true,
-              "expr": "sum by(friendly_name) (sensor_unit_percent{friendly_name=~\".*Illuminance\"})",
+              "expr": "sum by(friendly_name) (homeassistant_sensor_unit_percent{friendly_name=~\".*Illuminance\"})",
               "interval": "",
               "legendFormat": "{{friendly_name}}",
               "refId": "A"
@@ -438,10 +421,6 @@ data:
           "display": "timeline",
           "expandFromQueryS": 0,
           "extendLastValue": true,
-          "fieldConfig": {
-            "defaults": {},
-            "overrides": []
-          },
           "gridPos": {
             "h": 8,
             "w": 12,
@@ -472,7 +451,7 @@ data:
           "targets": [
             {
               "exemplar": true,
-              "expr": "sum by(friendly_name) (person_state)",
+              "expr": "sum by(friendly_name) (homeassistant_person_state)",
               "interval": "",
               "legendFormat": "{{friendly_name}}",
               "refId": "A"
@@ -522,6 +501,7 @@ data:
           "title": "Presence",
           "type": "natel-discrete-panel",
           "units": "short",
+          "use12HourClock": false,
           "useTimePrecision": false,
           "valueMaps": [
             {
@@ -579,10 +559,6 @@ data:
           "display": "timeline",
           "expandFromQueryS": 0,
           "extendLastValue": true,
-          "fieldConfig": {
-            "defaults": {},
-            "overrides": []
-          },
           "gridPos": {
             "h": 8,
             "w": 12,
@@ -612,7 +588,7 @@ data:
           "targets": [
             {
               "exemplar": true,
-              "expr": "sum by(friendly_name) (binary_sensor_state{friendly_name=~\".*tv\"})",
+              "expr": "sum by(friendly_name) (homeassistant_binary_sensor_state{friendly_name=~\".*TV\"})",
               "interval": "",
               "legendFormat": "{{friendly_name}}",
               "refId": "A"
@@ -664,6 +640,7 @@ data:
           "title": "TV Usage",
           "type": "natel-discrete-panel",
           "units": "short",
+          "use12HourClock": false,
           "useTimePrecision": false,
           "valueMaps": [
             {
@@ -701,69 +678,10 @@ data:
           "writeAllValues": false,
           "writeLastValue": true,
           "writeMetricNames": false
-        },
-        {
-          "datasource": null,
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "none"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 24
-          },
-          "id": 14,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "none",
-            "justifyMode": "center",
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "text": {},
-            "textMode": "auto"
-          },
-          "pluginVersion": "7.5.5",
-          "targets": [
-            {
-              "exemplar": true,
-              "expr": "sum by(friendly_name) (last_updated_time_seconds{friendly_name=~\".*Motion.*\"})",
-              "format": "time_series",
-              "instant": false,
-              "interval": "",
-              "legendFormat": "{{friendly_name}}",
-              "refId": "A"
-            }
-          ],
-          "title": "Last Motion",
-          "transformations": [],
-          "type": "stat"
         }
       ],
       "refresh": false,
-      "schemaVersion": 27,
+      "schemaVersion": 30,
       "style": "dark",
       "tags": [],
       "templating": {

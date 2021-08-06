@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    app: kube-prometheus-stack
+    release: kube-prometheus-stack
+  name: hass
+  namespace: monitoring
+spec:
+  groups:
+  - name: hass
+    rules:
+    - alert: NetworkClosetTemperature
+      annotations:
+        message: Temperature {{ $value }}
+      expr: ((sum by(entity, friendly_name, job) (homeassistant_sensor_temperature_celsius{entity="sensor.network_closet_sensor_temperature"})) * 9/5 + 32) > 100
+      labels:
+        severity: critical
+        namespace: monitoring

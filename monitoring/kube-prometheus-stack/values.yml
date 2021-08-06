@@ -3,12 +3,20 @@ defaultRules:
   rules:
     etcd: false
     kubeScheduler: false
+    kubeApiserverSlos: false
 
 global:
   rbac:
     pspEnabled: false
 
 alertmanager:
+  alertmanagerSpec:
+    alertmanagerConfigNamespaceSelector:
+      matchExpressions:
+      - key: prometheus
+        operator: In
+        values:
+        - scrape
   ingress:
     enabled: true
     hosts:
@@ -41,22 +49,22 @@ grafana:
     storageClassName: longhorn
     accessModes: ["ReadWriteOnce"]
 
-  additionalDataSources:
-    - name: PostgreSQL - Spot Look Back
-      type: postgres
-      url: # db url:port
-      database: spot-look-back
-      user: grafana
-      jsonData:
-        sslmode: require
-        postgresVersion: 1000
-        tlsSkipVerify: true
-        tlsConfigurationMethod: file-content
-      secureJsonData:
-        password: # password
-        tlsCACert: |
-          -----BEGIN CERTIFICATE-----
-          -----END CERTIFICATE-----
+  # additionalDataSources:
+    # - name: PostgreSQL - Spot Look Back
+      # type: postgres
+      # url: # db url:port
+      # database: spot-look-back
+      # user: grafana
+      # jsonData:
+        # sslmode: require
+        # postgresVersion: 1000
+        # tlsSkipVerify: true
+        # tlsConfigurationMethod: file-content
+      # secureJsonData:
+        # password: # password
+        # tlsCACert: |
+          # -----BEGIN CERTIFICATE-----
+          # -----END CERTIFICATE-----
 
 kubeControllerManager:
   enabled: false
@@ -77,17 +85,17 @@ kube-state-metrics:
 prometheus-node-exporter:
   resources:
     requests:
-      cpu: 50m
+      cpu: 100m
       memory: 100Mi
     limits:
-      cpu: 200m
+      cpu: 500m
       memory: 200Mi
 
 prometheusOperator:
   resources:
     requests:
-      cpu: 50m
-      memory: 50Mi
+      cpu: 100m
+      memory: 100Mi
     limits:
       cpu: 1000m
       memory: 500Mi
