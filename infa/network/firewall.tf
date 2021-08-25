@@ -1,5 +1,5 @@
 resource "unifi_firewall_rule" "chrome" {
-  name    = "chrome"
+  name    = "Looten Plunder - Chromecast"
   rule_index = 2005
   ruleset = "LAN_IN"
   action  = "accept"
@@ -91,6 +91,18 @@ resource "unifi_firewall_rule" "TEHWHALE_Allow_LAN" {
   protocol = "all"
   dst_network_id = unifi_network.TEHWHALE.id
   src_network_id = unifi_network.LAN.id
+}
+
+resource "unifi_firewall_rule" "TEHOSTRICHA_Allow_HomeJump" {
+  name    = "TEHOSTRICHA - Allow HomeJump"
+  rule_index = 2025
+  ruleset = "LAN_IN"
+  action  = "accept"
+  protocol = "all"
+  src_address = "192.168.79.6"
+  src_network_type = "ADDRv4"
+  dst_address = "192.168.78.72"
+  dst_network_type = "ADDRv4"
 }
 
 resource "unifi_firewall_rule" "LAN_Drop_All" {
