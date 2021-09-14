@@ -24,7 +24,7 @@ spec:
         zwave: "true"
       containers:
         - name: zwavejs2mqtt
-          image: zwavejs/zwavejs2mqtt:5.5.4
+          image: zwavejs/zwavejs2mqtt:5.6.0
           livenessProbe:
             failureThreshold: 3
             httpGet:
