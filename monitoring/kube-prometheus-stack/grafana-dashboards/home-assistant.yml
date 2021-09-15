@@ -353,7 +353,7 @@ data:
           "targets": [
             {
               "exemplar": true,
-              "expr": "sum by(friendly_name) (homeassistant_sensor_unit_percent{friendly_name=~\".*Illuminance\"})",
+              "expr": "sum by(friendly_name) (homeassistant_sensor_illuminance_percent{friendly_name=~\".*Illuminance\"})",
               "interval": "",
               "legendFormat": "{{friendly_name}}",
               "refId": "A"
