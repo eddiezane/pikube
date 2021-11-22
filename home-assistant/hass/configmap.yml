@@ -45,6 +45,9 @@ data:
 
     logbook:
 
+    logger:
+      default: info
+
     binary_sensor:
       - platform: template
         sensors:
